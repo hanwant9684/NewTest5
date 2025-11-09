@@ -15,6 +15,29 @@ def get_download_path(folder_id: int, filename: str, root_dir: str = "downloads"
     return os.path.join(folder, filename)
 
 
+def _drop_file_cache(file_path: str) -> None:
+    """
+    Helper to drop OS cache for a file using posix_fadvise.
+    Safely handles systems where posix_fadvise is unavailable or file doesn't exist.
+    """
+    if not hasattr(os, 'posix_fadvise') or not os.path.exists(file_path):
+        return
+    
+    fd = None
+    try:
+        fd = os.open(file_path, os.O_RDONLY)
+        os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
+        LOGGER(__name__).debug(f"Dropped OS cache for: {file_path}")
+    except OSError as e:
+        LOGGER(__name__).debug(f"Cache drop skipped for {file_path}: {e}")
+    finally:
+        if fd is not None:
+            try:
+                os.close(fd)
+            except OSError:
+                pass
+
+
 def cleanup_download(path: str) -> None:
     try:
         if not path or path is None:
@@ -24,8 +47,11 @@ def cleanup_download(path: str) -> None:
         LOGGER(__name__).info(f"Cleaning Download: {path}")
         
         if os.path.exists(path):
+            _drop_file_cache(path)
             os.remove(path)
+            
         if os.path.exists(path + ".temp"):
+            _drop_file_cache(path + ".temp")
             os.remove(path + ".temp")
 
         folder = os.path.dirname(path)
