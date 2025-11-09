@@ -1407,15 +1407,17 @@ async def callback_handler(event):
             f"🎬 **Get {PREMIUM_DOWNLOADS} FREE downloads!**\n\n"
             "**How it works:**\n"
             "1️⃣ Click the button below\n"
-            "2️⃣ View the short ad (5-10 seconds)\n"
-            "3️⃣ Your verification code will appear automatically\n"
-            "4️⃣ Copy the code and send: `/verifypremium <code>`\n\n"
-            "⚠️ **Note:** Please wait for the ad page to fully load!\n\n"
-            "⏱️ Code expires in 30 minutes"
+            "2️⃣ Navigate through pages 1-5 on our blog (2.5 minutes total)\n"
+            "3️⃣ A timer will show your progress at the top\n"
+            "4️⃣ After completing all pages, get your verification code\n"
+            "5️⃣ Send: `/verifypremium <code>`\n\n"
+            "⚠️ **Note:** You must visit 5 different pages within the time limit!\n\n"
+            "⏱️ Session expires in 30 minutes"
         )
         
         markup = InlineKeyboardMarkup([
-            [InlineKeyboardButton.url(f"🎁 Watch Ad & Get {PREMIUM_DOWNLOADS} Downloads", ad_url)]
+            [InlineKeyboardButton.url(f"🎁 Watch Ad & Get {PREMIUM_DOWNLOADS} Downloads", ad_url)],
+            [InlineKeyboardButton.url("❓ Don't know How to Verify", "https://t.me/Wolfy004/43")]
         ])
         
         await event.answer()
@@ -1507,15 +1509,17 @@ async def callback_handler(event):
             f"🎬 **Get {PREMIUM_DOWNLOADS} FREE downloads!**\n\n"
             "**How it works:**\n"
             "1️⃣ Click the button below\n"
-            "2️⃣ View the short ad (5-10 seconds)\n"
-            "3️⃣ Your verification code will appear automatically\n"
-            "4️⃣ Copy the code and send: `/verifypremium <code>`\n\n"
-            "⚠️ **Note:** Please wait for the ad page to fully load!\n\n"
-            "⏱️ Code expires in 30 minutes"
+            "2️⃣ Navigate through pages 1-5 on our blog (2.5 minutes total)\n"
+            "3️⃣ A timer will show your progress at the top\n"
+            "4️⃣ After completing all pages, get your verification code\n"
+            "5️⃣ Send: `/verifypremium <code>`\n\n"
+            "⚠️ **Note:** You must visit 5 different pages within the time limit!\n\n"
+            "⏱️ Session expires in 30 minutes"
         )
         
         markup = InlineKeyboardMarkup([
-            [InlineKeyboardButton.url(f"🎁 Watch Ad & Get {PREMIUM_DOWNLOADS} Downloads", ad_url)]
+            [InlineKeyboardButton.url(f"🎁 Watch Ad & Get {PREMIUM_DOWNLOADS} Downloads", ad_url)],
+            [InlineKeyboardButton.url("❓ Don't know How to Verify", "https://t.me/Wolfy004/43")]
         ])
         
         await event.answer()
