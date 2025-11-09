@@ -1,33 +1,10 @@
 import os
 import asyncio
-import io
 from typing import Optional, Callable
 from telethon import TelegramClient
 from telethon.tl.types import Message
 from logger import LOGGER
-
-
-def _drop_file_cache(file_path: str) -> None:
-    """
-    Helper to drop OS cache for a file using posix_fadvise.
-    Safely handles systems where posix_fadvise is unavailable or file doesn't exist.
-    """
-    if not hasattr(os, 'posix_fadvise') or not os.path.exists(file_path):
-        return
-    
-    fd = None
-    try:
-        fd = os.open(file_path, os.O_RDONLY)
-        os.posix_fadvise(fd, 0, 0, os.POSIX_FADV_DONTNEED)
-        LOGGER(__name__).debug(f"Dropped OS cache for: {file_path}")
-    except OSError as e:
-        LOGGER(__name__).debug(f"Cache drop skipped for {file_path}: {e}")
-    finally:
-        if fd is not None:
-            try:
-                os.close(fd)
-            except OSError:
-                pass
+from helpers.files import _drop_file_cache
 
 async def download_media_streaming(
     client: TelegramClient,
