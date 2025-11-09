@@ -13,10 +13,9 @@ SESSION_VALIDITY_MINUTES = 30
 class AdMonetization:
     def __init__(self):
         # All ads are on website only - no URL shorteners needed
-        self.adsterra_smartlink = "https://www.effectivegatecpm.com/zn01rc1vt?key=78d0724d73f6154a582464c95c28210d"
         self.blog_url = "https://socialhub00.blogspot.com/"
         
-        LOGGER(__name__).info("Ad Monetization initialized - using Adsterra SmartLink to blog")
+        LOGGER(__name__).info("Ad Monetization initialized - using Blogspot with Adsterra ads")
     
     def create_ad_session(self, user_id: int) -> str:
         """Create a temporary session for ad watching"""
