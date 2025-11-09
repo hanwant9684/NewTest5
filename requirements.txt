@@ -1,0 +1,6 @@
+Telethon
+cryptg
+psutil
+uvloop
+waitress
+orjson

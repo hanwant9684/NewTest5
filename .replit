@@ -1,0 +1,95 @@
+modules = ["python-3.12", "web"]
+[agent]
+expertMode = true
+
+[nix]
+channel = "stable-25_05"
+packages = ["cargo", "libiconv", "libuv", "openssl", "rustc"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "telegram-bot"
+
+[[workflows.workflow]]
+name = "telegram-bot"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python server_wsgi.py"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 33091
+externalPort = 8080
+
+[[ports]]
+localPort = 35517
+externalPort = 6800
+
+[[ports]]
+localPort = 35609
+externalPort = 3003
+
+[[ports]]
+localPort = 36903
+externalPort = 5000
+
+[[ports]]
+localPort = 37155
+externalPort = 6000
+
+[[ports]]
+localPort = 37929
+externalPort = 8081
+
+[[ports]]
+localPort = 38979
+externalPort = 8099
+
+[[ports]]
+localPort = 39477
+externalPort = 5173
+
+[[ports]]
+localPort = 39887
+externalPort = 3002
+
+[[ports]]
+localPort = 40749
+externalPort = 4200
+
+[[ports]]
+localPort = 40895
+externalPort = 8000
+
+[[ports]]
+localPort = 43175
+externalPort = 8008
+
+[[ports]]
+localPort = 44223
+externalPort = 3000
+
+[[ports]]
+localPort = 45793
+externalPort = 3001
+
+[deployment]
+deploymentTarget = "vm"
+run = ["python", "server_wsgi.py"]

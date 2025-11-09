@@ -1,0 +1,2164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' b:templateVersion='1.3.3' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes' name='viewport'/>
+    <meta content='IE=edge' http-equiv='X-UA-Compatible'/>
+    
+    <b:if cond='data:view.isHomepage'>
+      <title><data:blog.pageTitle/></title>
+    <b:else/>
+      <title><data:view.title.escaped/> | <data:blog.title/></title>
+    </b:if>
+    
+    <b:include data='blog' name='all-head-content'/>
+    
+    <!-- Modern Google Font for Header -->
+    <link rel='preconnect' href='https://fonts.googleapis.com'/>
+    <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin='crossorigin'/>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&amp;display=swap' rel='stylesheet'/>
+    
+    <!-- Preconnect to ad servers for faster loading (Adsterra only) -->
+    <link rel='preconnect' href='https://www.highperformanceformat.com'/>
+    <link rel='preconnect' href='https://pl27986671.effectivegatecpm.com'/>
+    <link rel='preconnect' href='https://pl27986712.effectivegatecpm.com'/>
+    <link rel='preconnect' href='https://pl27986715.effectivegatecpm.com'/>
+    <link rel='dns-prefetch' href='//www.highperformanceformat.com'/>
+    
+    <!-- Universal Canonical URL for ALL pages (removes ?m=1 mobile parameter) -->
+    <b:if cond='data:view.isPost'>
+      <link expr:href='data:post.url.canonical' rel='canonical'/>
+    <b:else/>
+      <link expr:href='data:blog.url.canonical' rel='canonical'/>
+    </b:if>
+    
+    <!-- SEO Meta Tags -->
+    <b:if cond='data:view.isPost'>
+      <meta expr:content='data:post.title' property='og:title'/>
+      <meta expr:content='data:post.url' property='og:url'/>
+      <meta content='article' property='og:type'/>
+      <b:if cond='data:post.featuredImage'>
+        <meta expr:content='data:post.featuredImage' property='og:image'/>
+      </b:if>
+      <meta expr:content='data:post.snippet' property='og:description'/>
+      <meta content='summary_large_image' name='twitter:card'/>
+      <meta expr:content='data:post.author' name='author'/>
+      <b:if cond='data:post.snippet'>
+        <meta expr:content='data:post.snippet' name='description'/>
+      </b:if>
+    <b:else/>
+      <meta expr:content='data:blog.title' property='og:title'/>
+      <meta expr:content='data:blog.homepageUrl' property='og:url'/>
+      <meta content='website' property='og:type'/>
+      <b:if cond='data:blog.metaDescription'>
+        <meta expr:content='data:blog.metaDescription' name='description'/>
+      <b:else/>
+        <meta expr:content='data:blog.title + &quot; - Your source for social media tips, tricks, and hacks that make life easy&quot;' name='description'/>
+      </b:if>
+    </b:if>
+    
+    <!-- JSON-LD Structured Data for SEO - Using JavaScript for proper escaping -->
+    <b:if cond='data:view.isPost'>
+      <script type='text/javascript'>
+      //<![CDATA[
+      (function() {
+        var blogPosting = {
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          "headline": "<data:post.title.jsonEscaped/>",
+          "url": "<data:post.url.jsonEscaped/>",
+          "datePublished": "<data:post.dateIso8601/>",
+          "dateModified": "<data:post.lastUpdatedIso8601/>",
+          "author": {
+            "@type": "Person",
+            "name": "<data:post.author.jsonEscaped/>"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "<data:blog.title.jsonEscaped/>",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://socialhub00.blogspot.com/favicon.ico"
+            }
+          },
+          <b:if cond='data:post.featuredImage'>
+          "image": "<data:post.featuredImage.jsonEscaped/>",
+          </b:if>
+          "description": "<data:post.snippet.jsonEscaped/>"
+        };
+        
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(blogPosting);
+        document.head.appendChild(script);
+      })();
+      //]]>
+      </script>
+      
+      <!-- BreadcrumbList Schema for SEO -->
+      <script type='text/javascript'>
+      //<![CDATA[
+      (function() {
+        var breadcrumb = {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "<data:blog.homepageUrl/>"
+            }
+            <b:if cond='data:post.labels'>
+            <b:loop values='data:post.labels limit 1' var='label'>
+            ,{
+              "@type": "ListItem",
+              "position": 2,
+              "name": "<data:label.name.jsonEscaped/>",
+              "item": "<data:label.url.jsonEscaped/>"
+            }
+            </b:loop>
+            </b:if>
+            ,{
+              "@type": "ListItem",
+              "position": <b:if cond='data:post.labels'>3<b:else/>2</b:if>,
+              "name": "<data:post.title.jsonEscaped/>",
+              "item": "<data:post.url.jsonEscaped/>"
+            }
+          ]
+        };
+        
+        var script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.text = JSON.stringify(breadcrumb);
+        document.head.appendChild(script);
+      })();
+      //]]>
+      </script>
+    </b:if>
+    
+    <!-- Organization Schema -->
+    <script type='text/javascript'>
+    //<![CDATA[
+    (function() {
+      var organization = {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "<data:blog.title.jsonEscaped/>",
+        "url": "<data:blog.homepageUrl/>",
+        "logo": "https://socialhub00.blogspot.com/favicon.ico",
+        "sameAs": []
+      };
+      
+      var script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(organization);
+      document.head.appendChild(script);
+    })();
+    //]]>
+    </script>
+    
+    <!-- WebSite Schema with Search -->
+    <script type='text/javascript'>
+    //<![CDATA[
+    (function() {
+      var website = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "<data:blog.title.jsonEscaped/>",
+        "url": "<data:blog.homepageUrl/>",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "<data:blog.homepageUrl/>search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      };
+      
+      var script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(website);
+      document.head.appendChild(script);
+    })();
+    //]]>
+    </script>
+
+    <b:skin version='1.3.3'><![CDATA[
+/*
+<Variable name="keycolor" description="Main Color" type="color" default="#2196f3" value="#2196f3"/>
+<Variable name="startSide" description="Start side" type="automatic" default="left" hideEditor="true"/>
+<Variable name="endSide" description="End side" type="automatic" default="right" hideEditor="true"/>
+
+<Group description="Page">
+<Variable name="body.font" description="Font" type="font" default="normal normal 15px Roboto, sans-serif" value="normal normal 15px Roboto, sans-serif"/>
+<Variable name="body.text.color" description="Text Color" type="color" default="#757575" value="#757575"/>
+<Variable name="body.background.color" description="Background" type="color" default="#ffffff" value="#ffffff"/>
+<Variable name="body.link.color" description="Link Color" type="color" default="#2196f3" value="#2196f3"/>
+</Group>
+
+<Group description="Header" selector="div.widget.Header">
+<Variable name="header.background.color" description="Background" type="color" default="#2196f3" value="#2196f3"/>
+<Variable name="header.title.font" description="Title Font" type="font" default="bold 45px Roboto, sans-serif" value="bold 45px Roboto, sans-serif"/>
+<Variable name="header.title.color" description="Title Color" type="color" default="#ffffff" value="#ffffff"/>
+</Group>
+
+<Group description="Posts" selector="div.widget.Blog">
+<Variable name="posts.title.font" description="Post Title Font" type="font" default="bold 22px Roboto, sans-serif" value="bold 22px Roboto, sans-serif"/>
+<Variable name="posts.title.color" description="Post Title Color" type="color" default="#212121" value="#212121"/>
+<Variable name="posts.text.color" description="Post Text Color" type="color" default="#757575" value="#757575"/>
+</Group>
+*/
+
+/* Modern SEO-Optimized Theme - SPACE OPTIMIZED */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  color: $(body.text.color);
+  background: $(body.background.color);
+  overflow-x: hidden;
+}
+
+a {
+  color: $(body.link.color);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent content overflow */
+table, pre, code, iframe, embed, object {
+  max-width: 100%;
+  overflow-x: auto;
+  word-wrap: break-word;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  border-collapse: collapse;
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 0.85rem;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+@media (max-width: 768px) {
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 0;
+  }
+  
+  .post {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.header-wrapper {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 1.5rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  position: relative;
+  margin: 0;
+}
+
+.Header h1 {
+  font-family: 'Poppins', 'Roboto', sans-serif;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 0 60px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  letter-spacing: 1px;
+}
+
+@media (min-width: 768px) {
+  .Header h1 {
+    font-size: 2.5rem;
+    padding: 0 80px;
+  }
+}
+
+.Header h1 a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.Header .description {
+  display: none !important;
+}
+
+.PageList {
+  margin-top: 0.5rem;
+}
+
+.PageList ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.PageList li a {
+  display: block;
+  padding: 0.4rem 0.75rem;
+  color: rgba(255,255,255,0.9);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.PageList li.selected a,
+.PageList li a:hover {
+  background: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.main-wrapper {
+  padding: 1rem 0;
+  margin: 0;
+  width: 100%;
+}
+
+.main-content {
+  width: 100%;
+  min-width: 0;
+}
+
+.content-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    grid-template-columns: 1fr 300px;
+    gap: 2rem;
+  }
+}
+
+.post {
+  background: white;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  border: 1px solid #e5e7eb;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .post:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+}
+
+.post-thumbnail {
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.post-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.post:hover .post-thumbnail img {
+  transform: scale(1.05);
+}
+
+.post-body {
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .post-body {
+    padding: 1.5rem;
+  }
+}
+
+.post-body * {
+  max-width: 100%;
+}
+
+.post-title {
+  margin-bottom: 0.75rem;
+}
+
+.post-title a {
+  font: $(posts.title.font);
+  color: $(posts.title.color);
+  line-height: 1.3;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .post-title a {
+    font-size: 1.5rem;
+  }
+}
+
+.post-title a:hover {
+  color: $(body.link.color);
+}
+
+.post-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post-snippet {
+  color: $(posts.text.color);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e5e7eb;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.jump-link {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: $(body.link.color);
+  color: white !important;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+
+.jump-link:hover {
+  opacity: 0.9;
+  transform: translateX(4px);
+}
+
+.post-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.post-labels a {
+  padding: 0.25rem 0.625rem;
+  background: #f3f4f6;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+.post-labels a:hover {
+  background: $(body.link.color);
+  color: white;
+  border-color: $(body.link.color);
+}
+
+.item-post .post-body {
+  padding: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .item-post .post-body {
+    padding: 2rem;
+  }
+}
+
+.post-body-content {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #1f2937;
+}
+
+.post-body-content img {
+  margin: 1.5rem auto;
+  border-radius: 8px;
+}
+
+.post-body-content h2,
+.post-body-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-body-content ul,
+.post-body-content ol {
+  margin-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-body-content blockquote {
+  border-left: 4px solid $(body.link.color);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: #6b7280;
+}
+
+.blog-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+.blog-pager a {
+  padding: 0.625rem 1.25rem;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 4px;
+  font-weight: 600;
+  flex: 1;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.blog-pager a:hover {
+  background: $(body.link.color);
+  color: white;
+  border-color: $(body.link.color);
+}
+
+.comments {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.comments h4 {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+@media (max-width: 1023px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+.widget {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  border: 1px solid #e5e7eb;
+}
+
+/* Remove white boxes from Header and PageList - make them clean and minimal */
+.header-wrapper .widget {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  border: none !important;
+}
+
+/* Navigation is now VISIBLE - Pages menu will show below header */
+
+.widget h2 {
+  font-size: 1.125rem;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid $(body.link.color);
+}
+
+.widget ul {
+  list-style: none;
+}
+
+.widget ul li {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.widget ul li:last-child {
+  border-bottom: none;
+}
+
+.widget ul li a {
+  display: block;
+  color: #1f2937;
+  transition: all 0.3s ease;
+  font-size: 0.875rem;
+}
+
+.widget ul li a:hover {
+  color: $(body.link.color);
+  padding-left: 0.5rem;
+}
+
+.PopularPosts ul li {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+}
+
+.PopularPosts .item-thumbnail {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.PopularPosts .item-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.PopularPosts .item-title a {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.Label ul {
+  display: flex !important;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.Label li {
+  border: none !important;
+  padding: 0 !important;
+}
+
+.Label a {
+  display: inline-block !important;
+  padding: 0.4rem 0.75rem !important;
+  background: #f3f4f6 !important;
+  border-radius: 999px !important;
+  font-size: 0.8125rem !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.Label a:hover {
+  background: $(body.link.color) !important;
+  color: white !important;
+  padding-left: 0.75rem !important;
+}
+
+.footer-wrapper {
+  background: #1f2937;
+  color: white;
+  padding: 1.5rem 0;
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.footer p {
+  margin: 0.25rem 0;
+  opacity: 0.8;
+  font-size: 0.875rem;
+}
+
+.footer a {
+  color: white;
+}
+
+@media print {
+  .header-wrapper,
+  .PageList,
+  .sidebar,
+  .footer-wrapper,
+  .blog-pager,
+  .comments {
+    display: none !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: $(body.link.color);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+.hamburger-menu {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger-menu span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.hamburger-menu:hover span {
+  background: rgba(255,255,255,0.8);
+}
+
+.header-search {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1001;
+}
+
+.search-icon-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.search-icon-btn:hover {
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+}
+
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 3000;
+  display: none;
+  align-items: flex-start;
+  padding-top: 80px;
+  justify-content: center;
+}
+
+.search-overlay.active {
+  display: flex;
+}
+
+.search-box-container {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.search-box-container form {
+  display: flex;
+  gap: 10px;
+}
+
+.search-box-container input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.search-box-container input[type="text"]:focus {
+  border-color: #667eea;
+}
+
+.search-box-container button[type="submit"] {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.search-box-container button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102,126,234,0.4);
+}
+
+.search-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 5px 10px;
+  line-height: 1;
+}
+
+.search-close-btn:hover {
+  color: #333;
+}
+
+@media (max-width: 480px) {
+  .hamburger-menu {
+    left: 10px;
+  }
+  
+  .header-search {
+    right: 10px;
+  }
+  
+  .Header h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .Header h1 {
+    font-size: 1.2rem !important;
+  }
+}
+
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 85%;
+  max-width: 320px;
+  height: 100vh;
+  background: white;
+  box-shadow: 2px 0 20px rgba(0,0,0,0.2);
+  transition: left 0.3s ease;
+  z-index: 2000;
+  overflow-y: auto;
+  padding-bottom: 80px;
+}
+
+.nav-drawer.open {
+  left: 0;
+}
+
+@media (min-width: 480px) {
+  .nav-drawer {
+    width: 320px;
+  }
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1999;
+}
+
+.nav-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.nav-drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.nav-drawer-header h3 {
+  margin: 0;
+  font-size: 1.125rem;
+  color: #1f2937;
+}
+
+.nav-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0;
+  line-height: 1;
+}
+
+.nav-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-menu > li {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.nav-menu > li > a,
+.nav-menu > li > button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 20px;
+  color: #1f2937;
+  text-decoration: none;
+  font-size: 0.95rem;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.nav-menu > li > a:hover,
+.nav-menu > li > button:hover {
+  background: #f3f4f6;
+}
+
+.nav-menu .icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-submenu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #f9fafb;
+}
+
+.nav-submenu.open {
+  max-height: 500px;
+}
+
+.nav-submenu li {
+  padding-left: 52px;
+}
+
+.nav-submenu li a {
+  display: block;
+  padding: 12px 20px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.nav-submenu li a:hover {
+  color: $(body.link.color);
+  background: white;
+}
+
+.chevron {
+  margin-left: auto;
+  transition: transform 0.3s ease;
+}
+
+.chevron.rotate {
+  transform: rotate(180deg);
+}
+
+.nav-footer-links {
+  padding: 20px;
+  border-top: 2px solid #e5e7eb;
+  margin-top: 20px;
+}
+
+.nav-footer-links h4 {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.nav-footer-links a {
+  display: block;
+  padding: 8px 0;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.nav-footer-links a:hover {
+  color: $(body.link.color);
+}
+
+.footer-support-section {
+  margin: 1.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.footer-support-section h3 {
+  color: white;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.footer-support-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.footer-support-links a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 0.875rem;
+  padding: 0.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.footer-support-links a:hover {
+  color: white;
+}
+
+@media (max-width: 480px) {
+  .footer-support-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+.cookie-consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1f2937;
+  color: white;
+  padding: 1.25rem;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+  display: none;
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.cookie-consent.show {
+  display: block;
+}
+
+.cookie-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cookie-text {
+  flex: 1;
+  min-width: 250px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.cookie-text a {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.cookie-buttons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.cookie-btn {
+  padding: 0.625rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.cookie-accept {
+  background: #2196f3;
+  color: white;
+}
+
+.cookie-accept:hover {
+  background: #1976d2;
+}
+
+.cookie-decline {
+  background: #6b7280;
+  color: white;
+}
+
+.cookie-decline:hover {
+  background: #4b5563;
+}
+
+.breadcrumb {
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.breadcrumb a:hover {
+  color: $(body.link.color);
+}
+
+.breadcrumb span {
+  margin: 0 0.5rem;
+}
+
+.social-share {
+  display: flex;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+  padding: 1rem 0;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.social-share-title {
+  font-weight: 600;
+  color: #1f2937;
+  margin-right: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.social-share a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 18px;
+}
+
+.social-share a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.share-facebook { background: #1877f2; }
+.share-twitter { background: #1da1f2; }
+.share-linkedin { background: #0a66c2; }
+.share-whatsapp { background: #25d366; }
+.share-telegram { background: #0088cc; }
+
+@media (max-width: 480px) {
+  .social-share {
+    flex-wrap: wrap;
+  }
+}
+
+.ad-zone {
+  margin: 1rem 0;
+  padding: 0;
+  text-align: center;
+  min-height: 90px;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ad-zone iframe,
+.ad-zone img,
+.ad-zone div,
+.ad-zone ins {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* In-article ad styling - Full width with negative margins */
+.in-article-ad {
+  margin: 1.5rem -1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 0;
+  text-align: center;
+  width: calc(100% + 2rem);
+  max-width: calc(100% + 2rem);
+  overflow: hidden;
+}
+
+.in-article-ad::before {
+  content: 'Advertisement';
+  display: block;
+  font-size: 0.75rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+@media (min-width: 768px) {
+  .in-article-ad {
+    margin: 1.5rem -1.5rem;
+    width: calc(100% + 3rem);
+    max-width: calc(100% + 3rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-zone {
+    margin: 0.75rem 0;
+    min-height: 50px;
+  }
+  
+  .ad-zone iframe,
+  .ad-zone ins {
+    max-width: 100%;
+  }
+  
+  .in-article-ad {
+    padding: 0.75rem;
+  }
+}
+
+]]></b:skin>
+  </head>
+
+  <body>
+    <a class='skip-link' href='#main'>Skip to content</a>
+
+    <!-- Cookie Consent Banner -->
+    <div class='cookie-consent' id='cookieConsent'>
+      <div class='cookie-content'>
+        <div class='cookie-text'>
+          We use cookies to enhance your browsing experience and analyze site traffic. By continuing to use this site, you consent to our use of cookies. 
+          <a href='https://socialhub00.blogspot.com/p/privacy-policy.html'>Learn more</a>
+        </div>
+        <div class='cookie-buttons'>
+          <button class='cookie-btn cookie-accept' onclick='acceptCookies()'>Accept</button>
+          <button class='cookie-btn cookie-decline' onclick='declineCookies()'>Decline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adsterra Social Bar (Mobile-friendly notification bar) - ASYNC -->
+    <script async='async' type='text/javascript' src='//pl27986712.effectivegatecpm.com/2b/df/1e/2bdf1ed6ce287741683400fd27494234.js'></script>
+
+    <!-- Navigation Drawer -->
+    <div class='nav-overlay' id='navOverlay' onclick='closeNav()' role='presentation'></div>
+    <nav class='nav-drawer' id='navDrawer' role='navigation' aria-label='Main navigation'>
+      <div class='nav-drawer-header'>
+        <h3>Menu</h3>
+        <button class='nav-close' onclick='closeNav()' aria-label='Close navigation menu'>&#215;</button>
+      </div>
+      <ul class='nav-menu' role='menubar'>
+        <li role='none'>
+          <a href='/' role='menuitem'>
+            <span class='icon' aria-hidden='true'>&#127968;</span>
+            <span>Home</span>
+          </a>
+        </li>
+        <li role='none'>
+          <button onclick='toggleSubmenu("categories")' aria-expanded='false' aria-controls='submenu-categories' role='menuitem'>
+            <span class='icon' aria-hidden='true'>&#128193;</span>
+            <span>Categories</span>
+            <span class='chevron' id='chevron-categories' aria-hidden='true'>&#9660;</span>
+          </button>
+          <ul class='nav-submenu' id='submenu-categories' role='menu' aria-label='Categories'>
+            <li role='none'><a href='/search/label/Telegram' role='menuitem'>🤖 Telegram</a></li>
+            <li role='none'><a href='/search/labelInstagram' role='menuitem'>🎬 Instagram</a></li>
+            <li role='none'><a href='/search/label/Youtube' role='menuitem'>▶️ Youtube</a></li>
+            <li role='none'><a href='/search/label/Vitamins' role='menuitem'>Vitamins</a></li>
+          </ul>
+        </li>
+        <li role='none'>
+          <a href='https://socialhub00.blogspot.com/p/about-us.html' role='menuitem'>
+            <span class='icon' aria-hidden='true'>&#128100;</span>
+            <span>About</span>
+          </a>
+        </li>
+        <li role='none'>
+          <a href='https://socialhub00.blogspot.com/p/contact-us.html' role='menuitem'>
+            <span class='icon' aria-hidden='true'>&#9993;</span>
+            <span>Contact</span>
+          </a>
+        </li>
+      </ul>
+      <div class='nav-footer-links'>
+        <h4>More...</h4>
+        <a href='https://socialhub00.blogspot.com/p/terms-conditions.html'>Terms&amp;Conditions</a>
+        <a href='https://socialhub00.blogspot.com/p/privacy-policy.html'>Privacy Policy</a>
+      </div>
+    </nav>
+
+    <div class='header-wrapper' itemscope='itemscope' itemtype='http://schema.org/WPHeader' role='banner'>
+      <div class='container'>
+        <!-- Hamburger Menu Button -->
+        <button class='hamburger-menu' onclick='openNav()' aria-label='Open menu'>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
+        <!-- Search Icon Button -->
+        <div class='header-search'>
+          <button class='search-icon-btn' onclick='openSearch()' aria-label='Open search'>
+            <svg width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'>
+              <circle cx='11' cy='11' r='8'></circle>
+              <path d='m21 21-4.35-4.35'></path>
+            </svg>
+          </button>
+        </div>
+        
+        <!-- Search Overlay (opens when search icon is clicked) -->
+        <div class='search-overlay' id='searchOverlay' onclick='closeSearchIfClickOutside(event)'>
+          <div class='search-box-container'>
+            <button class='search-close-btn' onclick='closeSearch()' aria-label='Close search'>×</button>
+            <form action='/search' method='get'>
+              <input type='text' name='q' placeholder='Search...' aria-label='Search' id='searchInput' autocomplete='off'/>
+              <button type='submit'>Search</button>
+            </form>
+          </div>
+        </div>
+        
+        <b:section class='header' id='header' maxwidgets='1' showaddelement='no'>
+          <b:widget id='Header1' locked='true' title='Blog Title' type='Header' version='2' visible='true'>
+            <b:includable id='main'>
+              <b:if cond='data:imagePlacement == &quot;REPLACE&quot;'>
+                <b:if cond='data:sourceUrl'>
+                  <a expr:href='data:blog.homepageUrl'><img expr:alt='data:blog.title' expr:src='data:sourceUrl'/></a>
+                <b:else/>
+                  <a expr:href='data:blog.homepageUrl' style='text-decoration: none; color: inherit;'>
+                    <h1 itemprop='name'><data:blog.title/></h1>
+                  </a>
+                  <b:if cond='data:blog.metaDescription'>
+                    <p class='description'><data:blog.metaDescription/></p>
+                  </b:if>
+                </b:if>
+              <b:else/>
+                <a expr:href='data:blog.homepageUrl' style='text-decoration: none; color: inherit;'>
+                  <h1 itemprop='name'><data:blog.title/></h1>
+                </a>
+                <b:if cond='data:blog.metaDescription'>
+                  <p class='description'><data:blog.metaDescription/></p>
+                </b:if>
+              </b:if>
+            </b:includable>
+          </b:widget>
+        </b:section>
+
+        <b:section class='navigation' id='navigation' maxwidgets='1' showaddelement='no'>
+          <b:widget id='PageList1' locked='false' title='Pages' type='PageList' version='2' visible='true'>
+            <b:includable id='main'>
+              <nav role='navigation'>
+                <ul>
+                  <b:if cond='data:homeTitle'><li><a expr:href='data:blog.homepageUrl'><data:homeTitle/></a></li></b:if>
+                  <b:loop values='data:links' var='link'>
+                    <b:if cond='data:link.isCurrentPage'>
+                      <li class='selected'><a expr:href='data:link.href'><data:link.title/></a></li>
+                    <b:else/>
+                      <li><a expr:href='data:link.href'><data:link.title/></a></li>
+                    </b:if>
+                  </b:loop>
+                </ul>
+              </nav>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </div>
+    </div>
+
+    <div class='main-wrapper'>
+      <div class='container'>
+        <div class='content-wrapper'>
+          <main class='main-content' id='main' itemscope='itemscope' itemtype='http://schema.org/Blog' role='main'>
+            
+            <!-- EXTRA AD SPACE 3 (Above Content) - Ready for future ads -->
+            <div class='ad-zone ad-placeholder' id='ad-extra-above-content' style='margin: 1rem 0; display: none;'>
+              <!-- Add your ad code here when ready -->
+              <div style='background: #f0f0f0; padding: 1rem; text-align: center; color: #999; border: 2px dashed #ddd; border-radius: 8px;'>
+                Extra Ad Space 3 - Above Content
+              </div>
+            </div>
+            
+            <!-- Adsterra Native Banner (Above posts) -->
+            <div class='ad-zone' id='ad-native-above'>
+              <script async="async" data-cfasync="false" src="//pl27986715.effectivegatecpm.com/6654fd354b9f9b188fe1890d08ef14b5/invoke.js"></script>
+              <div id="container-6654fd354b9f9b188fe1890d08ef14b5"></div>
+            </div>
+
+            <b:section class='main' id='main' showaddelement='no'>
+              <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog' version='2' visible='true'>
+                <b:includable id='main' var='top'>
+                  <b:if cond='!data:view.isPreview'>
+                    <b:loop values='data:posts' var='post'>
+                      <b:include data='post' name='post'/>
+                    </b:loop>
+                    <b:include name='nextprev'/>
+                  <b:else/>
+                    <b:include name='noData'/>
+                  </b:if>
+                </b:includable>
+
+                <b:includable id='post' var='post'>
+                  <article class='post' expr:id='&quot;post-&quot; + data:post.id' itemscope='itemscope' itemtype='http://schema.org/BlogPosting'>
+                    <b:if cond='data:post.featuredImage'>
+                      <div class='post-thumbnail'>
+                        <a expr:href='data:post.url'><img expr:alt='data:post.title' expr:src='data:post.featuredImage' itemprop='image' loading='lazy'/></a>
+                      </div>
+                    </b:if>
+
+                    <div class='post-body'>
+                      <!-- Breadcrumb Navigation for Single Post View -->
+                      <b:if cond='data:view.isPost'>
+                        <nav class='breadcrumb' aria-label='Breadcrumb'>
+                          <a href='/' rel='home'>Home</a>
+                          <span aria-hidden='true'>&gt;</span>
+                          <b:if cond='data:post.labels'>
+                            <b:loop values='data:post.labels limit 1' var='label'>
+                              <a expr:href='data:label.url'><data:label.name/></a>
+                              <span aria-hidden='true'>&gt;</span>
+                            </b:loop>
+                          </b:if>
+                          <span aria-current='page'><data:post.title/></span>
+                        </nav>
+                      </b:if>
+                      
+                      <!-- PERMANENT AD VERIFICATION TIMER - Always present in HTML -->
+                      <div id='verification-timer' style='display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; text-align: center; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; box-shadow: 0 2px 10px rgba(0,0,0,0.2); margin-bottom: 20px; border-radius: 8px; line-height: 1.6;'>
+                        <div id='timer-content'>⏱️ Loading verification timer...</div>
+                      </div>
+                      
+                      <h2 class='post-title' itemprop='name headline'>
+                        <b:if cond='data:view.isMultipleItems'>
+                          <a expr:href='data:post.url' itemprop='url'><data:post.title/></a>
+                        <b:else/>
+                          <data:post.title/>
+                        </b:if>
+                      </h2>
+
+                      <div class='post-header'>
+                        <b:if cond='data:post.author'>
+                          <span class='post-author' itemprop='author' itemscope='itemscope' itemtype='http://schema.org/Person'>
+                            <span itemprop='name'><data:post.author/></span>
+                          </span>
+                        </b:if>
+                        <b:if cond='data:post.timestamp'>
+                          <time class='post-timestamp' expr:datetime='data:post.timestampISO8601' itemprop='datePublished'>
+                            <data:post.timestamp/>
+                          </time>
+                        </b:if>
+                      </div>
+
+                      <div itemprop='description'>
+                        <b:if cond='data:view.isMultipleItems'>
+                          <div class='post-snippet'><data:post.snippet/></div>
+                        <b:else/>
+                          <div class='post-body-content' itemprop='articleBody' id='article-content'><data:post.body/></div>
+                          
+                          <!-- Social Sharing Buttons for Posts -->
+                          <b:if cond='data:view.isPost'>
+                            <div class='social-share' role='complementary' aria-label='Share this article'>
+                              <span class='social-share-title'>Share:</span>
+                              <a expr:href='&quot;https://www.facebook.com/sharer/sharer.php?u=&quot; + data:post.url' target='_blank' rel='noopener noreferrer' class='share-facebook' aria-label='Share on Facebook' title='Share on Facebook'>
+                                <span aria-hidden='true'>f</span>
+                              </a>
+                              <a expr:href='&quot;https://twitter.com/intent/tweet?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' target='_blank' rel='noopener noreferrer' class='share-twitter' aria-label='Share on Twitter' title='Share on Twitter'>
+                                <span aria-hidden='true'>𝕏</span>
+                              </a>
+                              <a expr:href='&quot;https://www.linkedin.com/shareArticle?mini=true&amp;url=&quot; + data:post.url' target='_blank' rel='noopener noreferrer' class='share-linkedin' aria-label='Share on LinkedIn' title='Share on LinkedIn'>
+                                <span aria-hidden='true'>in</span>
+                              </a>
+                              <a expr:href='&quot;https://wa.me/?text=&quot; + data:post.title + &quot; &quot; + data:post.url' target='_blank' rel='noopener noreferrer' class='share-whatsapp' aria-label='Share on WhatsApp' title='Share on WhatsApp'>
+                                <span aria-hidden='true'>&#9990;</span>
+                              </a>
+                              <a expr:href='&quot;https://t.me/share/url?url=&quot; + data:post.url + &quot;&amp;text=&quot; + data:post.title' target='_blank' rel='noopener noreferrer' class='share-telegram' aria-label='Share on Telegram' title='Share on Telegram'>
+                                <span aria-hidden='true'>&#9992;</span>
+                              </a>
+                            </div>
+                          </b:if>
+                          
+                          <!-- IN-ARTICLE AD (After content, before footer) - Single post only - FIXED -->
+                          <div class='ad-zone ad-responsive' id='ad-in-article' style='margin: 1.5rem 0;'>
+                            <!-- Adsterra Banner Responsive (728x90 desktop / 300x250 mobile) -->
+                            <script type='text/javascript'>
+//<![CDATA[
+(function() {
+  try {
+    var isMobile = window.innerWidth < 768;
+    var scriptHtml = '';
+    
+    if (isMobile) {
+      scriptHtml = '<scr' + 'ipt type="text/javascript">atOptions = {"key":"5f3913da0e004390580a604d6e48a9b8","format":"iframe","height":250,"width":300,"params":{}};</scr' + 'ipt>';
+      scriptHtml += '<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/5f3913da0e004390580a604d6e48a9b8/invoke.js"></scr' + 'ipt>';
+    } else {
+      scriptHtml = '<scr' + 'ipt type="text/javascript">atOptions = {"key":"c41a9f7776da0a69bae50804a4826f3d","format":"iframe","height":90,"width":728,"params":{}};</scr' + 'ipt>';
+      scriptHtml += '<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/c41a9f7776da0a69bae50804a4826f3d/invoke.js"></scr' + 'ipt>';
+    }
+    
+    document.write(scriptHtml);
+    console.log('[Ad] In-article ad loaded (' + (isMobile ? 'mobile' : 'desktop') + ')');
+  } catch(e) {
+    console.error('[Ad] In-article ad error:', e);
+  }
+})();
+//]]>
+</script>
+                          </div>
+                        </b:if>
+                      </div>
+
+                      <div class='post-footer'>
+                        <b:if cond='data:view.isMultipleItems'>
+                          <a class='jump-link' expr:href='data:post.url'>Read More</a>
+                        </b:if>
+
+                        <b:if cond='data:post.labels'>
+                          <div class='post-labels'>
+                            <b:loop values='data:post.labels' var='label'>
+                              <a expr:href='data:label.url' rel='tag'><data:label.name/></a>
+                            </b:loop>
+                          </div>
+                        </b:if>
+                      </div>
+                    </div>
+
+                    <!-- END OF ARTICLE AD (After entire post, before comments) - Single post only - FIXED -->
+                    <b:if cond='data:view.isSingleItem'>
+                      <div class='ad-zone ad-end-article' id='ad-end-article' style='margin: 1.5rem 0; display: flex; justify-content: center;'>
+                        <!-- Adsterra Banner 300x250 (centered) -->
+                        <script type='text/javascript'>
+//<![CDATA[
+(function() {
+  try {
+    atOptions = {
+      'key' : '5f3913da0e004390580a604d6e48a9b8',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
+    document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/' + atOptions.key + '/invoke.js"></scr' + 'ipt>');
+    console.log('[Ad] End of article ad loaded');
+  } catch(e) {
+    console.error('[Ad] End article ad error:', e);
+  }
+})();
+//]]>
+</script>
+                      </div>
+                      
+                      <b:include data='post' name='comment_picker'/>
+                    </b:if>
+                  </article>
+                </b:includable>
+
+                <b:includable id='nextprev'>
+                  <div class='blog-pager' id='blog-pager'>
+                    <b:if cond='data:newerPageUrl'>
+                      <a class='blog-pager-newer-link' expr:href='data:newerPageUrl' expr:title='data:newerPageTitle'>Newer Posts</a>
+                    </b:if>
+                    <b:if cond='data:olderPageUrl'>
+                      <a class='blog-pager-older-link' expr:href='data:olderPageUrl' expr:title='data:olderPageTitle'>Older Posts</a>
+                    </b:if>
+                  </div>
+                </b:includable>
+
+                <b:includable id='comment_picker' var='post'>
+                  <b:if cond='data:post.allowComments'>
+                    <div class='comments' id='comments'>
+                      <h4>Comments</h4>
+                      <b:include data='post' name='comments'/>
+                    </div>
+                  </b:if>
+                </b:includable>
+
+                <b:includable id='noData'>
+                  <div class='post'>
+                    <div class='post-body' style='text-align: center; padding: 3rem;'>
+                      <h2>No posts available</h2>
+                      <p>Start creating content for your blog!</p>
+                    </div>
+                  </div>
+                </b:includable>
+              </b:widget>
+            </b:section>
+
+            <!-- Adsterra Native Banner (Below posts) -->
+            <div class='ad-zone' id='ad-native-below'>
+              <script async="async" data-cfasync="false" src="//pl27986715.effectivegatecpm.com/6654fd354b9f9b188fe1890d08ef14b5/invoke.js"></script>
+              <div id="container-6654fd354b9f9b188fe1890d08ef14b5-below"></div>
+            </div>
+            
+            <!-- EXTRA AD SPACE 4 (Below Content) - Ready for future ads -->
+            <div class='ad-zone ad-placeholder' id='ad-extra-below-content' style='margin: 1rem 0; display: none;'>
+              <!-- Add your ad code here when ready -->
+              <div style='background: #f0f0f0; padding: 1rem; text-align: center; color: #999; border: 2px dashed #ddd; border-radius: 8px;'>
+                Extra Ad Space 4 - Below Content
+              </div>
+            </div>
+          </main>
+
+          <aside class='sidebar' role='complementary'>
+            
+            <!-- Adsterra Banner 300x250 (Sidebar) - FIXED -->
+            <div class='ad-zone' id='ad-sidebar'>
+              <script type='text/javascript'>
+//<![CDATA[
+(function() {
+  try {
+    atOptions = {
+      'key' : '5f3913da0e004390580a604d6e48a9b8',
+      'format' : 'iframe',
+      'height' : 250,
+      'width' : 300,
+      'params' : {}
+    };
+    document.write('<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/' + atOptions.key + '/invoke.js"></scr' + 'ipt>');
+    console.log('[Ad] Sidebar ad loaded');
+  } catch(e) {
+    console.error('[Ad] Sidebar ad error:', e);
+  }
+})();
+//]]>
+</script>
+            </div>
+
+            <!-- EXTRA AD SPACE 5 (Sidebar) - Ready for future ads -->
+            <div class='ad-zone ad-placeholder' id='ad-extra-sidebar' style='margin: 1rem 0; display: none;'>
+              <!-- Add your ad code here when ready -->
+              <div style='background: #f0f0f0; padding: 1rem; text-align: center; color: #999; border: 2px dashed #ddd; border-radius: 8px;'>
+                Extra Ad Space 5 - Sidebar
+              </div>
+            </div>
+
+            <b:section class='sidebar' id='sidebar' preferred='yes' showaddelement='yes'>
+            </b:section>
+
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <div class='footer-wrapper' itemscope='itemscope' itemtype='http://schema.org/WPFooter' role='contentinfo'>
+      <div class='container'>
+        <!-- BOTTOM OF PAGE AD (Footer area) - FIXED -->
+        <div class='ad-zone ad-footer-responsive' id='ad-footer' style='margin-bottom: 1.5rem;'>
+          <!-- Adsterra Banner Responsive (728x90 desktop / 300x250 mobile) -->
+          <script type='text/javascript'>
+//<![CDATA[
+(function() {
+  try {
+    var isMobile = window.innerWidth < 768;
+    var scriptHtml = '';
+    
+    if (isMobile) {
+      scriptHtml = '<scr' + 'ipt type="text/javascript">atOptions = {"key":"5f3913da0e004390580a604d6e48a9b8","format":"iframe","height":250,"width":300,"params":{}};</scr' + 'ipt>';
+      scriptHtml += '<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/5f3913da0e004390580a604d6e48a9b8/invoke.js"></scr' + 'ipt>';
+    } else {
+      scriptHtml = '<scr' + 'ipt type="text/javascript">atOptions = {"key":"c41a9f7776da0a69bae50804a4826f3d","format":"iframe","height":90,"width":728,"params":{}};</scr' + 'ipt>';
+      scriptHtml += '<scr' + 'ipt type="text/javascript" src="//www.highperformanceformat.com/c41a9f7776da0a69bae50804a4826f3d/invoke.js"></scr' + 'ipt>';
+    }
+    
+    document.write(scriptHtml);
+    console.log('[Ad] Footer ad loaded (' + (isMobile ? 'mobile' : 'desktop') + ')');
+  } catch(e) {
+    console.error('[Ad] Footer ad error:', e);
+  }
+})();
+//]]>
+</script>
+        </div>
+        
+        <!-- NATIVE BANNER IN FOOTER -->
+        <div class='ad-zone' id='ad-footer-native' style='margin: 1.5rem 0;'>
+          <script async="async" data-cfasync="false" src="//pl27986715.effectivegatecpm.com/6654fd354b9f9b188fe1890d08ef14b5/invoke.js"></script>
+          <div id="container-6654fd354b9f9b188fe1890d08ef14b5-footer"></div>
+        </div>
+        
+        <!-- EXTRA AD SPACE 1 (Footer Top) - Ready for future ads -->
+        <div class='ad-zone ad-placeholder' id='ad-extra-footer-1' style='margin: 1rem 0; display: none;'>
+          <!-- Add your ad code here when ready -->
+          <div style='background: #f0f0f0; padding: 1rem; text-align: center; color: #999; border: 2px dashed #ddd; border-radius: 8px;'>
+            Extra Ad Space 1 - Footer Top
+          </div>
+        </div>
+        
+        <!-- EXTRA AD SPACE 2 (Footer Bottom) - Ready for future ads -->
+        <div class='ad-zone ad-placeholder' id='ad-extra-footer-2' style='margin: 1rem 0; display: none;'>
+          <!-- Add your ad code here when ready -->
+          <div style='background: #f0f0f0; padding: 1rem; text-align: center; color: #999; border: 2px dashed #ddd; border-radius: 8px;'>
+            Extra Ad Space 2 - Footer Bottom
+          </div>
+        </div>
+        
+        <!-- Support Section in Footer -->
+        <div class='footer-support-section'>
+          <h3>Support</h3>
+          <div class='footer-support-links'>
+            <a href='https://socialhub00.blogspot.com/p/contact-us.html'>Contact</a>
+            <span style='color: rgba(255,255,255,0.5);'>|</span>
+            <a href='https://socialhub00.blogspot.com/p/privacy-policy.html'>Privacy-Policy</a>
+            <span style='color: rgba(255,255,255,0.5);'>|</span>
+            <a href='https://socialhub00.blogspot.com/p/terms-conditions.html'>Terms&amp;Conditions</a>
+            <span style='color: rgba(255,255,255,0.5);'>|</span>
+            <a href='https://socialhub00.blogspot.com/sitemap.xml'>Sitemap</a>
+          </div>
+        </div>
+        
+        <div class='footer'>
+          <p>&#169; <script>document.write(new Date().getFullYear())</script> <data:blog.title/>. All rights reserved.</p>
+          <p>Powered by <a href='https://www.blogger.com' rel='nofollow'>Blogger</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adsterra Popunder - ASYNC with error handling -->
+    <script async='async' defer='defer' type='text/javascript' src='//pl27986671.effectivegatecpm.com/c0/b0/15/c0b015cd341a99514c7c6e1d5ce12b99.js' onerror="console.error('[Ad] Popunder failed to load')"></script>
+
+    <!-- SOLID, PERMANENT AD VERIFICATION TIMER - Runs immediately -->
+    <script type='text/javascript'>
+//<![CDATA[
+(function() {
+  // Run immediately, no waiting for DOM
+  var verificationPages = [
+    '/2025/11/building-your-first-gpt-powered.html',
+    '/2025/11/how-to-make-money-with-telegram-bots.html',
+    '/2025/11/how-to-download-youtube-videos-with.html',
+    '/2025/11/how-to-set-theme.html',
+    '/2025/11/how-to-download-instagram-reels-using.html'
+  ];
+  
+  var timePerPage = 15; // 15 seconds
+  
+  function initTimer() {
+    try {
+      // Get URL parameters
+      var urlParams = new URLSearchParams(window.location.search);
+      var sessionId = urlParams.get('session');
+      var appUrl = urlParams.get('app_url');
+      
+      // Only run if session ID exists
+      if (!sessionId) {
+        return;
+      }
+      
+      var currentPath = window.location.pathname;
+      var currentPageIndex = verificationPages.indexOf(currentPath);
+      
+      // Check if current page is part of verification
+      if (currentPageIndex === -1) {
+        window.location.href = verificationPages[0] + '?session=' + sessionId + (appUrl ? '&app_url=' + encodeURIComponent(appUrl) : '');
+        return;
+      }
+      
+      var currentPageNum = currentPageIndex + 1;
+      var totalPages = verificationPages.length;
+      
+      // Get the timer element (already in HTML)
+      var timerBar = document.getElementById('verification-timer');
+      var timerContent = document.getElementById('timer-content');
+      
+      if (!timerBar || !timerContent) {
+        console.error('Timer elements not found');
+        return;
+      }
+      
+      // Show the timer
+      timerBar.style.display = 'block';
+      
+      // Create next page button container
+      var nextButtonContainer = document.createElement('div');
+      nextButtonContainer.id = 'next-page-container';
+      nextButtonContainer.style.cssText = 'display: none; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); text-align: center; margin-top: 30px; border: 2px solid #667eea;';
+      
+      var postBody = document.querySelector('.post-body');
+      if (postBody) {
+        postBody.appendChild(nextButtonContainer);
+      }
+      
+      var timeRemaining = timePerPage;
+      
+      function updateTimer() {
+        var progress = ((currentPageNum / totalPages) * 100).toFixed(0);
+        
+        if (timeRemaining > 0) {
+          timerContent.innerHTML = '<strong>🎯 Page ' + currentPageNum + ' of ' + totalPages + ' (' + progress + '%)</strong><br/>Please wait: ' + timeRemaining + ' seconds...';
+          timeRemaining--;
+          setTimeout(updateTimer, 1000);
+        } else {
+          timerContent.innerHTML = '<strong>✅ Timer Complete!</strong> Scroll down to see the next page button';
+          showNextPageButton();
+        }
+      }
+      
+      function showNextPageButton() {
+        if (currentPageNum < totalPages) {
+          var nextPageUrl = verificationPages[currentPageNum] + '?session=' + sessionId + (appUrl ? '&app_url=' + encodeURIComponent(appUrl) : '');
+          nextButtonContainer.innerHTML = '<h3 style="color: #2196f3; margin-bottom: 10px;">✅ Great Job!</h3>' +
+            '<p style="color: #666; margin-bottom: 15px;">Page ' + currentPageNum + ' of ' + totalPages + ' complete</p>' +
+            '<a href="' + nextPageUrl + '" onclick="return handleNextPageClick(event, this.href);" style="display: inline-block; padding: 15px 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; text-decoration: none; border-radius: 8px; font-size: 16px; font-weight: bold; box-shadow: 0 4px 12px rgba(102,126,234,0.4); transition: all 0.3s ease;">Go to Page ' + (currentPageNum + 1) + ' →</a>';
+          nextButtonContainer.style.display = 'block';
+        } else {
+          timerContent.innerHTML = '🎉 <strong>ALL PAGES COMPLETE!</strong> Generating your code...';
+          setTimeout(function() {
+            if (appUrl) {
+              window.location.href = appUrl + '/verify-ad?session=' + sessionId;
+            } else {
+              timerContent.innerHTML = '❌ Error: Missing app URL. Please contact support.';
+            }
+          }, 2000);
+        }
+      }
+      
+      // Next page click handler - opens popunder and navigates in one click
+      function handleNextPageClick(event, url) {
+        event.preventDefault();
+        
+        try {
+          // Open popunder ad in background (non-blocking)
+          var popunder = window.open('https://www.effectivegatecpm.com/zn01rc1vt?key=78d0724d73f6154a582464c95c28210d', '_blank');
+          if (popunder) {
+            popunder.blur();
+            window.focus();
+          }
+        } catch(e) {
+          console.log('[Ad] Popunder blocked:', e);
+        }
+        
+        // Navigate to next page immediately (no delay needed)
+        window.location.href = url;
+        
+        return false;
+      }
+      
+      // Start timer immediately
+      updateTimer();
+      
+    } catch(e) {
+      console.error('Timer init error:', e);
+    }
+  }
+  
+  // Run immediately
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTimer);
+  } else {
+    initTimer();
+  }
+})();
+//]]>
+    </script>
+    
+    <!-- Adsterra SmartBar (Sticky notification bar) - FIXED -->
+    <script type='text/javascript'>
+<![CDATA[
+(function() {
+  try {
+    atOptions = {
+      'key' : '78d0724d73f6154a582464c95c28210d',
+      'format' : 'iframe',
+      'height' : 50,
+      'width' : 320,
+      'params' : {}
+    };
+    
+    var scriptElement = document.createElement('script');
+    scriptElement.type = 'text/javascript';
+    scriptElement.async = true;
+    scriptElement.src = '//www.highperformanceformat.com/' + atOptions.key + '/invoke.js';
+    scriptElement.onerror = function() {
+      console.error('[Ad] SmartBar failed to load');
+    };
+    scriptElement.onload = function() {
+      console.log('[Ad] SmartBar loaded successfully');
+    };
+    document.body.appendChild(scriptElement);
+  } catch(e) {
+    console.error('[Ad] SmartBar initialization error:', e);
+  }
+})();
+]]>
+</script>
+
+    <!-- Navigation Menu Controls with Keyboard Support -->
+    <script>
+//<![CDATA[
+var focusableElements = [];
+var firstFocusableElement = null;
+var lastFocusableElement = null;
+
+function openNav() {
+  var navDrawer = document.getElementById('navDrawer');
+  var navOverlay = document.getElementById('navOverlay');
+  
+  navDrawer.classList.add('open');
+  navOverlay.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  
+  // Get all focusable elements in nav drawer
+  focusableElements = navDrawer.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  if (focusableElements.length > 0) {
+    firstFocusableElement = focusableElements[0];
+    lastFocusableElement = focusableElements[focusableElements.length - 1];
+    
+    // Focus first element
+    setTimeout(function() {
+      firstFocusableElement.focus();
+    }, 100);
+  }
+}
+
+function closeNav() {
+  var navDrawer = document.getElementById('navDrawer');
+  var navOverlay = document.getElementById('navOverlay');
+  
+  navDrawer.classList.remove('open');
+  navOverlay.classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+function toggleSubmenu(menuId) {
+  var submenu = document.getElementById('submenu-' + menuId);
+  var chevron = document.getElementById('chevron-' + menuId);
+  var button = document.querySelector('[aria-controls="submenu-' + menuId + '"]');
+  
+  if (submenu.classList.contains('open')) {
+    submenu.classList.remove('open');
+    chevron.classList.remove('rotate');
+    if (button) button.setAttribute('aria-expanded', 'false');
+  } else {
+    submenu.classList.add('open');
+    chevron.classList.add('rotate');
+    if (button) button.setAttribute('aria-expanded', 'true');
+  }
+}
+
+// Keyboard navigation with focus trapping
+document.addEventListener('keydown', function(e) {
+  var navDrawer = document.getElementById('navDrawer');
+  var isOpen = navDrawer.classList.contains('open');
+  
+  // Close on Escape
+  if (e.key === 'Escape' && isOpen) {
+    closeNav();
+    return;
+  }
+  
+  // Focus trapping
+  if (isOpen && e.key === 'Tab') {
+    if (e.shiftKey) { // Shift + Tab
+      if (document.activeElement === firstFocusableElement) {
+        e.preventDefault();
+        lastFocusableElement.focus();
+      }
+    } else { // Tab
+      if (document.activeElement === lastFocusableElement) {
+        e.preventDefault();
+        firstFocusableElement.focus();
+      }
+    }
+  }
+});
+
+// Search Overlay Functions
+function openSearch() {
+  var searchOverlay = document.getElementById('searchOverlay');
+  var searchInput = document.getElementById('searchInput');
+  searchOverlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Focus search input after a short delay
+  setTimeout(function() {
+    searchInput.focus();
+  }, 100);
+}
+
+function closeSearch() {
+  var searchOverlay = document.getElementById('searchOverlay');
+  searchOverlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeSearchIfClickOutside(event) {
+  if (event.target.id === 'searchOverlay') {
+    closeSearch();
+  }
+}
+
+// Close search on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var searchOverlay = document.getElementById('searchOverlay');
+    if (searchOverlay && searchOverlay.classList.contains('active')) {
+      closeSearch();
+    }
+  }
+});
+
+// Cookie Consent Functions
+function acceptCookies() {
+  localStorage.setItem('cookieConsent', 'accepted');
+  document.getElementById('cookieConsent').classList.remove('show');
+  // Load analytics/ads if needed
+  console.log('Cookies accepted');
+}
+
+function declineCookies() {
+  localStorage.setItem('cookieConsent', 'declined');
+  document.getElementById('cookieConsent').classList.remove('show');
+  console.log('Cookies declined');
+}
+
+// Show cookie banner if not answered
+window.addEventListener('load', function() {
+  var consent = localStorage.getItem('cookieConsent');
+  if (!consent) {
+    setTimeout(function() {
+      document.getElementById('cookieConsent').classList.add('show');
+    }, 1000);
+  }
+});
+//]]>
+    </script>
+
+    <b:include data='blog' name='google-analytics'/>
+  </body>
+</html>
