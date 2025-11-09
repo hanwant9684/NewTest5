@@ -1,1 +1,590 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Verification {{ 'Successful' if code else 'Failed' }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            position: relative;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 28px;
+        }
+        
+        .message {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .code-box {
+            background: #f7fafc;
+            border: 2px dashed #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            position: relative;
+        }
+        
+        .code-box.error {
+            border-color: #fc8181;
+            background: #fff5f5;
+        }
+        
+        .code-label {
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .verification-code {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 4px;
+            user-select: all;
+            cursor: pointer;
+            word-break: break-all;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .verification-code:hover {
+            background: #edf2f7;
+            transform: scale(1.05);
+        }
+        
+        .verification-code:active {
+            transform: scale(0.98);
+        }
+        
+        .timer-warning {
+            background: #fef5e7;
+            border: 1px solid #f39c12;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 15px 0;
+            color: #856404;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .timer-warning.show {
+            display: block;
+            animation: pulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .instructions {
+            background: #edf2f7;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            margin-top: 25px;
+        }
+        
+        .instructions h3 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            color: #4a5568;
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        .instructions code {
+            background: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-size: 14px;
+            word-break: break-all;
+        }
+        
+        .btn {
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            min-width: 200px;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+            background: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .btn.success {
+            background: #48bb78;
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .alert.show {
+            display: block;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .offline-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #fc8181;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .offline-indicator.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .verification-code {
+                font-size: 24px;
+                letter-spacing: 2px;
+            }
+            
+            .btn {
+                min-width: 100%;
+                margin: 8px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-indicator" id="offlineIndicator">
+        📡 No internet connection
+    </div>
+    
+    <div class="container">
+        <div id="loadingState" style="display: none;">
+            <div class="loading-spinner"></div>
+            <p class="message">Processing verification...</p>
+        </div>
+        
+        <div id="contentState">
+            <div class="success-icon">{{ '✅' if code else '❌' }}</div>
+            <h1 id="pageTitle">{{ title }}</h1>
+            <p class="message" id="pageMessage">{{ message }}</p>
+            
+            <div id="alertContainer"></div>
+            
+            {% if code %}
+            <div class="code-box" id="codeBox">
+                <div class="code-label">Your Verification Code</div>
+                <div class="verification-code" id="code" onclick="copyCode()" title="Click to copy">{{ code }}</div>
+            </div>
+            
+            <div class="timer-warning" id="timerWarning">
+                ⏰ This code expires in <span id="timeRemaining">30:00</span> minutes
+            </div>
+            
+            {% if bot_username %}
+            <a href="https://t.me/{{ bot_username }}?start=verify_{{ code }}" 
+               class="btn btn-primary" 
+               id="autoVerifyBtn"
+               onclick="trackClick('auto_verify')">
+                ✅ Auto-Verify in Bot
+            </a>
+            <p style="margin: 15px 0; color: #718096; font-size: 14px;">Recommended: One-click verification ☝️</p>
+            {% else %}
+            <div class="alert alert-info show">
+                ℹ️ Bot username not configured. Use manual verification below.
+            </div>
+            {% endif %}
+            
+            <button class="btn btn-secondary" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
+            
+            <div class="instructions">
+                <h3>📱 Manual Verification:</h3>
+                <ol>
+                    <li>Go back to the Telegram bot</li>
+                    <li>Send this command:<br><code id="manualCommand">/verifypremium {{ code }}</code></li>
+                    <li>Enjoy your free downloads!</li>
+                </ol>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #f7fafc; border-radius: 8px;">
+                <p style="font-size: 14px; color: #4a5568; margin-bottom: 10px;">
+                    <strong>💡 Troubleshooting:</strong>
+                </p>
+                <ul style="text-align: left; font-size: 13px; color: #718096; padding-left: 25px;">
+                    <li>Code saved in your browser for safety</li>
+                    <li>Don't refresh this page - code will expire</li>
+                    <li>If button doesn't work, copy code manually</li>
+                    <li>Code valid for 30 minutes only</li>
+                </ul>
+            </div>
+            {% else %}
+            <div class="instructions">
+                <h3>❓ What happened?</h3>
+                <p style="margin-bottom: 15px;">{{ message }}</p>
+                <ol>
+                    <li>Go back to the Telegram bot</li>
+                    <li>Use <code>/getpremium</code> to get a new ad link</li>
+                    <li>Complete the ad verification</li>
+                    <li>You'll receive a valid code</li>
+                </ol>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script>
+        (function() {
+            'use strict';
+            
+            const verificationCode = '{{ code }}';
+            const hasCode = verificationCode && verificationCode !== '';
+            const expiryMinutes = 30;
+            let expiryTime = null;
+            let timerInterval = null;
+            
+            window.onerror = function(msg, url, lineNo, columnNo, error) {
+                console.error('Page error:', msg);
+                showAlert('An error occurred. Your code is still valid: ' + verificationCode, 'error');
+                return false;
+            };
+            
+            function init() {
+                if (!hasCode) return;
+                
+                try {
+                    localStorage.setItem('backup_code_' + Date.now(), verificationCode);
+                    
+                    const stored = localStorage.getItem('verification_expiry');
+                    if (stored) {
+                        expiryTime = new Date(stored);
+                    } else {
+                        expiryTime = new Date(Date.now() + expiryMinutes * 60 * 1000);
+                        localStorage.setItem('verification_expiry', expiryTime.toISOString());
+                    }
+                    
+                    startTimer();
+                    
+                } catch (e) {
+                    console.warn('LocalStorage not available:', e);
+                }
+                
+                checkOnlineStatus();
+                window.addEventListener('online', updateOnlineStatus);
+                window.addEventListener('offline', updateOnlineStatus);
+                
+                document.getElementById('code').addEventListener('click', copyCode);
+                
+                preventCodeLeaks();
+            }
+            
+            function preventCodeLeaks() {
+                if (!hasCode) return;
+                
+                const originalLog = console.log;
+                console.log = function() {
+                    const args = Array.from(arguments).map(arg => 
+                        typeof arg === 'string' ? arg.replace(verificationCode, '[CODE]') : arg
+                    );
+                    originalLog.apply(console, args);
+                };
+            }
+            
+            function startTimer() {
+                if (!expiryTime) return;
+                
+                const timerWarning = document.getElementById('timerWarning');
+                timerWarning.classList.add('show');
+                
+                timerInterval = setInterval(updateTimer, 1000);
+                updateTimer();
+            }
+            
+            function updateTimer() {
+                const now = Date.now();
+                const remaining = expiryTime - now;
+                
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timeRemaining').textContent = 'EXPIRED';
+                    showAlert('⏰ Your code has expired. Please get a new one with /getpremium', 'error');
+                    document.getElementById('codeBox').classList.add('error');
+                    return;
+                }
+                
+                const minutes = Math.floor(remaining / 60000);
+                const seconds = Math.floor((remaining % 60000) / 1000);
+                document.getElementById('timeRemaining').textContent = 
+                    `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (remaining < 5 * 60 * 1000) {
+                    document.getElementById('timerWarning').style.animation = 'pulse 0.5s ease-in-out infinite';
+                }
+            }
+            
+            window.copyCode = function() {
+                const code = document.getElementById('code').textContent;
+                const btn = document.getElementById('copyBtn');
+                
+                if (!code) {
+                    showAlert('No code to copy', 'error');
+                    return;
+                }
+                
+                const fallbackCopy = function() {
+                    const textArea = document.createElement('textarea');
+                    textArea.value = code;
+                    textArea.style.position = 'fixed';
+                    textArea.style.top = '-9999px';
+                    textArea.style.left = '-9999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        
+                        if (successful) {
+                            btn.textContent = '✓ Copied!';
+                            btn.classList.add('success');
+                            showAlert('✓ Code copied to clipboard!', 'success');
+                            
+                            setTimeout(() => {
+                                btn.textContent = '📋 Copy Code';
+                                btn.classList.remove('success');
+                            }, 2000);
+                        } else {
+                            throw new Error('Copy command failed');
+                        }
+                    } catch (err) {
+                        document.body.removeChild(textArea);
+                        prompt('Copy this code manually (Ctrl+C or Cmd+C):', code);
+                    }
+                };
+                
+                if (!navigator.clipboard) {
+                    fallbackCopy();
+                    return;
+                }
+                
+                navigator.clipboard.writeText(code).then(() => {
+                    btn.textContent = '✓ Copied!';
+                    btn.classList.add('success');
+                    showAlert('✓ Code copied to clipboard!', 'success');
+                    
+                    setTimeout(() => {
+                        btn.textContent = '📋 Copy Code';
+                        btn.classList.remove('success');
+                    }, 2000);
+                }).catch(err => {
+                    console.warn('Clipboard API failed, using fallback:', err);
+                    fallbackCopy();
+                });
+            };
+            
+            window.trackClick = function(action) {
+                try {
+                    localStorage.setItem('last_action', action);
+                    localStorage.setItem('last_action_time', Date.now().toString());
+                } catch (e) {
+                    console.warn('Could not track click:', e);
+                }
+            };
+            
+            function showAlert(message, type) {
+                const container = document.getElementById('alertContainer');
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type} show`;
+                alert.textContent = message;
+                container.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.classList.remove('show');
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            }
+            
+            function checkOnlineStatus() {
+                updateOnlineStatus();
+            }
+            
+            function updateOnlineStatus() {
+                const indicator = document.getElementById('offlineIndicator');
+                if (!navigator.onLine) {
+                    indicator.classList.add('show');
+                } else {
+                    indicator.classList.remove('show');
+                }
+            }
+            
+            document.addEventListener('DOMContentLoaded', init);
+            
+            window.addEventListener('beforeunload', function(e) {
+                if (hasCode) {
+                    const confirmationMessage = 'Your verification code is on this page. Are you sure you want to leave?';
+                    e.returnValue = confirmationMessage;
+                    return confirmationMessage;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
