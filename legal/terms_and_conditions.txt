@@ -1,0 +1,152 @@
+TERMS AND CONDITIONS
+
+Last Updated: November 2, 2025
+Version: 1.0
+
+PLEASE READ THESE TERMS AND CONDITIONS CAREFULLY BEFORE USING THIS TELEGRAM BOT.
+
+1. ACCEPTANCE OF TERMS
+
+By accessing or using this Telegram bot (the "Service"), you agree to be bound by these Terms and Conditions ("Terms"). If you do not agree to these Terms, you must immediately stop using the Service.
+
+2. SERVICE DESCRIPTION
+
+This Service is a Telegram bot that allows users to download and forward media content from Telegram channels. The Service is provided "AS IS" without any warranties.
+
+3. USER RESPONSIBILITIES AND LEGAL COMPLIANCE
+
+3.1. You are solely responsible for your use of the Service and any content you download, share, or distribute.
+
+3.2. You agree to use the Service only for lawful purposes and in compliance with all applicable laws, including but not limited to:
+   - The Information Technology Act, 2000 (India)
+   - Copyright Act, 1957 (India)
+   - The General Data Protection Regulation (GDPR) (EU)
+   - Intellectual Property laws of your jurisdiction
+   - Telecommunications laws and regulations
+
+3.3. You agree NOT to use the Service to:
+   - Download, distribute, or share copyrighted material without proper authorization
+   - Access, download, or distribute illegal, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, or otherwise objectionable content
+   - Violate any intellectual property rights
+   - Engage in any activity that could harm minors
+   - Distribute malware, viruses, or any harmful code
+   - Violate any applicable laws or regulations
+
+3.4. You acknowledge that you are solely responsible for determining whether content you download is legal in your jurisdiction.
+
+4. DISCLAIMER OF LIABILITY
+
+4.1. THE SERVICE PROVIDER (BOT OWNER/OPERATOR) IS NOT RESPONSIBLE FOR:
+   - Any content downloaded, shared, or distributed by users
+   - Any illegal activities conducted by users
+   - Any copyright infringement by users
+   - Any damages, losses, or legal consequences arising from your use of the Service
+   - The accuracy, legality, or quality of any content accessed through the Service
+
+4.2. You acknowledge that the Service Provider acts only as a technical intermediary and does not control, monitor, or have knowledge of the specific content downloaded by users.
+
+4.3. The Service Provider expressly disclaims all liability for user actions and content.
+
+5. INDEMNIFICATION
+
+You agree to indemnify, defend, and hold harmless the Service Provider, its operators, and affiliates from any claims, damages, losses, liabilities, costs, and expenses (including legal fees) arising from:
+   - Your use of the Service
+   - Your violation of these Terms
+   - Your violation of any rights of third parties
+   - Your violation of any applicable laws
+
+6. INTELLECTUAL PROPERTY
+
+6.1. You are responsible for ensuring that you have the right to download and use any content accessed through the Service.
+
+6.2. The Service Provider does not claim ownership of any content downloaded by users.
+
+6.3. If you believe content accessed through the Service infringes your intellectual property rights, contact us immediately for removal.
+
+7. TERMINATION
+
+7.1. We reserve the right to terminate or suspend your access to the Service at any time, without notice, for any reason, including violation of these Terms.
+
+7.2. Users who violate copyright laws or engage in illegal activities will be permanently banned.
+
+8. AGE RESTRICTION
+
+You must be at least 18 years old to use this Service. By using the Service, you confirm that you are 18 years or older.
+
+9. GOVERNING LAW AND JURISDICTION
+
+9.1. These Terms shall be governed by and construed in accordance with the laws of India.
+
+9.2. Any disputes arising from these Terms or your use of the Service shall be subject to the exclusive jurisdiction of the courts in India.
+
+10. CHANGES TO TERMS
+
+We reserve the right to modify these Terms at any time. Continued use of the Service after changes constitutes acceptance of the modified Terms.
+
+11. PRIVACY
+
+Your use of the Service is also governed by our Privacy Policy, which is incorporated into these Terms by reference.
+
+12. LIMITATION OF LIABILITY
+
+TO THE MAXIMUM EXTENT PERMITTED BY LAW, THE SERVICE PROVIDER SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS, DATA, OR OTHER INTANGIBLE LOSSES ARISING FROM YOUR USE OF THE SERVICE.
+
+13. NO WARRANTY
+
+THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+14. SEVERABILITY
+
+If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions shall remain in full force and effect.
+
+15. ENTIRE AGREEMENT
+
+These Terms, together with the Privacy Policy, constitute the entire agreement between you and the Service Provider regarding the use of the Service.
+
+16. SERVICE PROVIDER INFORMATION
+
+**Service Provider Details:**
+Name: Hanwant Kumar
+Address: India
+Email: hanwant.beniwal63@gmail.com
+Telegram: @Wolfy004
+
+**Grievance Officer (India IT Act 2000 Compliance):**
+Name: Hanwant Kumar
+Email: hanwant.beniwal63@gmail.com
+Response Time: Within 24 hours of receiving complaint
+Resolution Time: Best efforts within 15 days
+
+**For International Users (GDPR):**
+Data Protection Officer: Hanwant Kumar
+DPO Email: hanwant.beniwal63@gmail.com
+
+**Jurisdiction:**
+All services are operated from India.
+Courts in India shall have exclusive jurisdiction.
+
+**For General Inquiries:**
+Email: hanwant.beniwal63@gmail.com
+Telegram: @Wolfy004
+
+**For Legal Notices:**
+Send written notice to: hanwant.beniwal63@gmail.com
+
+**For Copyright/DMCA Complaints:**
+Email: hanwant.beniwal63@gmail.com
+Subject Line: "Copyright Complaint - Telegram Bot"
+Include: Your contact information, description of copyrighted work, location of infringing material
+
+Response Time: We respond to all legal notices within 48 hours.
+
+17. ACKNOWLEDGMENT
+
+BY USING THIS SERVICE, YOU ACKNOWLEDGE THAT:
+   - You have read and understood these Terms
+   - You agree to be bound by these Terms
+   - You are solely responsible for your actions
+   - The Service Provider is not liable for your actions or content you download
+   - You will comply with all applicable laws
+
+IMPORTANT NOTICE:
+This Service is a neutral technology platform. Users are responsible for ensuring their use complies with applicable laws. The Service Provider assumes no responsibility for user actions or downloaded content.

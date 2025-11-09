@@ -1,1 +1,294 @@
+PRIVACY POLICY
 
+Last Updated: November 2, 2025
+Version: 1.0
+
+This Privacy Policy describes how we collect, use, store, and protect your personal information when you use our Telegram bot service (the "Service").
+
+1. INFORMATION WE COLLECT
+
+1.1. Automatically Collected Information:
+   - Telegram User ID (unique identifier)
+   - Telegram Username (if available)
+   - First and Last Name (from your Telegram profile)
+   - Interaction timestamps
+   - Download activity logs
+   - IP address (for legal compliance and security)
+
+1.2. Voluntarily Provided Information:
+   - Custom settings and preferences
+   - Payment information (processed through third-party payment providers)
+   - Session authentication data (if you authorize the bot to access private channels)
+
+1.3. Technical Information:
+   - Device and usage statistics
+   - Error logs and diagnostic data
+   - Service performance metrics
+
+2. HOW WE USE YOUR INFORMATION
+
+We use collected information for the following purposes:
+
+2.1. Service Provision:
+   - To provide and maintain the Service
+   - To process your download requests
+   - To authenticate your identity
+   - To manage your subscription (if applicable)
+
+2.2. Service Improvement:
+   - To analyze usage patterns
+   - To improve Service performance
+   - To develop new features
+   - To troubleshoot technical issues
+
+2.3. Legal Compliance:
+   - To comply with applicable laws and regulations
+   - To respond to legal requests and prevent fraud
+   - To enforce our Terms and Conditions
+   - To protect our rights and safety
+
+2.4. Communication:
+   - To send service-related notifications
+   - To respond to your inquiries
+   - To provide customer support
+
+3. DATA STORAGE AND RETENTION
+
+3.1. Storage Location:
+   - Your data is stored in secure databases
+   - Data may be stored on servers located in various jurisdictions
+   - We implement industry-standard security measures
+
+3.2. Retention Period:
+   - Active user data: Retained while your account is active
+   - Download logs: Retained for up to 90 days
+   - Legal compliance records: Retained as required by law
+   - Inactive accounts: Data deleted after 180 days of inactivity
+
+3.3. Data Deletion:
+   - You may request deletion of your data at any time
+   - Upon deletion request, your data will be removed within 30 days
+   - Some data may be retained for legal compliance purposes
+
+4. DATA SHARING AND DISCLOSURE
+
+4.1. We DO NOT sell your personal information to third parties.
+
+4.2. We may share your information in the following circumstances:
+
+   a) Service Providers:
+      - Payment processors for premium subscriptions
+      - Cloud storage providers for database backups
+      - Analytics providers for service improvement
+
+   b) Legal Requirements:
+      - To comply with legal obligations
+      - To respond to valid legal requests from authorities
+      - To enforce our Terms and Conditions
+      - To protect rights, property, and safety
+
+   c) Business Transfers:
+      - In case of merger, acquisition, or asset sale
+      - Users will be notified of any such change
+
+4.3. We do NOT share your download history or content with third parties except as required by law.
+
+5. YOUR RIGHTS (GDPR & INDIA IT ACT COMPLIANCE)
+
+Under applicable data protection laws, you have the following rights:
+
+5.1. Right to Access:
+   - Request a copy of your personal data
+   - Request information about how your data is processed
+
+5.2. Right to Rectification:
+   - Correct inaccurate or incomplete personal data
+
+5.3. Right to Erasure ("Right to be Forgotten"):
+   - Request deletion of your personal data
+   - Subject to legal retention requirements
+
+5.4. Right to Restrict Processing:
+   - Limit how we use your personal data
+
+5.5. Right to Data Portability:
+   - Receive your data in a structured, commonly used format
+   - Transfer your data to another service
+
+5.6. Right to Object:
+   - Object to processing of your personal data
+   - Opt-out of certain data processing activities
+
+5.7. Right to Withdraw Consent:
+   - Withdraw consent for data processing at any time
+
+To exercise these rights, contact us through the official channels.
+
+6. COOKIES AND TRACKING
+
+6.1. The Service may use session identifiers for authentication and service provision.
+
+6.2. We do not use traditional web cookies as this is a Telegram bot service.
+
+6.3. Session data is stored temporarily for service functionality and is automatically deleted after expiration.
+
+7. SECURITY MEASURES
+
+7.1. We implement appropriate technical and organizational measures to protect your data:
+   - Encryption in transit and at rest
+   - Access controls and authentication
+   - Regular security audits
+   - Secure backup procedures
+
+7.2. Despite our efforts, no method of transmission or storage is 100% secure. Use the Service at your own risk.
+
+7.3. You are responsible for maintaining the confidentiality of your Telegram account.
+
+8. CHILDREN'S PRIVACY
+
+8.1. The Service is not intended for users under 18 years of age.
+
+8.2. We do not knowingly collect personal information from children under 18.
+
+8.3. If we become aware that we have collected data from a child under 18, we will delete such information immediately.
+
+9. INTERNATIONAL DATA TRANSFERS
+
+9.1. Your information may be transferred to and processed in countries other than your country of residence.
+
+9.2. We ensure appropriate safeguards are in place for such transfers in compliance with applicable laws.
+
+10. DATA BREACH NOTIFICATION
+
+10.1. In the event of a data breach that may compromise your personal information:
+   - We will notify affected users within 72 hours of discovery
+   - We will notify relevant authorities as required by law
+   - We will take immediate steps to secure the data and prevent further breaches
+
+11. THIRD-PARTY SERVICES
+
+11.1. The Service may integrate with third-party services:
+   - Telegram API
+   - Payment processors
+   - URL shortening services
+
+11.2. We are not responsible for the privacy practices of third-party services.
+
+11.3. We encourage you to review the privacy policies of any third-party services you interact with.
+
+12. CHANGES TO THIS PRIVACY POLICY
+
+12.1. We may update this Privacy Policy from time to time.
+
+12.2. We will notify users of material changes through the Service or via Telegram message.
+
+12.3. Continued use of the Service after changes constitutes acceptance of the updated Privacy Policy.
+
+13. LEGAL BASIS FOR PROCESSING (GDPR)
+
+For users in the European Union, our legal basis for processing your personal data includes:
+
+13.1. Consent: You have given explicit consent for processing
+13.2. Contract: Processing is necessary to provide the Service
+13.3. Legal Obligation: Processing is required by law
+13.4. Legitimate Interests: Processing is necessary for our legitimate business interests
+
+14. DATA PROTECTION OFFICER
+
+For privacy-related inquiries or to exercise your rights, you may contact our data protection team through official channels.
+
+15. COMPLAINTS
+
+15.1. If you have concerns about our data practices, please contact us first.
+
+15.2. EU users have the right to lodge a complaint with their local supervisory authority.
+
+15.3. Indian users may contact the Data Protection Authority or approach the appropriate forum.
+
+16. CONSENT
+
+By using the Service, you consent to:
+   - Collection and processing of your personal information as described
+   - Storage of your data in accordance with this Privacy Policy
+   - Transfer of your data as necessary for service provision
+
+17. SERVICE PROVIDER AND CONTACT INFORMATION
+
+**Data Controller Details:**
+Name: Hanwant Kumar
+Address: India
+Email: hanwant.beniwal63@gmail.com
+Telegram: @Wolfy004
+
+**Data Protection Officer (GDPR Compliance):**
+Name: Hanwant Kumar
+Email: hanwant.beniwal63@gmail.com
+Responsibilities: Oversees data protection compliance and handles data subject requests
+
+**Grievance Redressal Officer (India IT Act 2000 & SPDI Rules 2011):**
+Name: Hanwant Kumar
+Designation: Owner and Compliance Officer
+Email: hanwant.beniwal63@gmail.com
+Phone: Available via email
+Address: India
+
+**Response Timeline:**
+- Acknowledgment: Within 24 hours
+- Resolution: Best efforts within 15 days of receiving complaint
+- For urgent privacy concerns: Immediate action within 48 hours
+
+**How to Contact for Privacy Issues:**
+1. Email: hanwant.beniwal63@gmail.com
+2. Telegram: @Wolfy004
+3. Written Notice: Send to the email above
+4. In-Bot Command: /privacy (for automated responses)
+
+**How to File a Complaint:**
+For grievances related to data privacy, misuse of personal information, or unauthorized access:
+1. Send email to Grievance Officer with subject: "Privacy Complaint - User ID [YOUR_ID]"
+2. Include: Your user ID, nature of complaint, supporting evidence
+3. We will acknowledge within 24 hours and resolve within 15 days
+
+**Your Rights - How to Exercise Them:**
+
+EU/GDPR Users:
+- Right to Access: Email hanwant.beniwal63@gmail.com with subject "GDPR Access Request"
+- Right to Erasure: Send /deleteaccount command in bot or email hanwant.beniwal63@gmail.com
+- Right to Portability: Email hanwant.beniwal63@gmail.com requesting data export
+- Right to Object: Email hanwant.beniwal63@gmail.com with specific processing concerns
+- File Complaint: Contact your local Data Protection Authority (links: https://edpb.europa.eu/about-edpb/board/members_en)
+
+Indian Users:
+- Data Access: Use /myinfo command or email hanwant.beniwal63@gmail.com
+- Data Deletion: Use /deleteaccount or contact Grievance Officer
+- Complaint Filing: Contact Grievance Officer (details above)
+- Legal Recourse: Approach Consumer Forum or Cyber Crime Cell if unresolved
+
+All Users:
+- We respond to all valid requests within the timelines mandated by applicable law
+- For urgent security/privacy issues: Mark email as "URGENT" for priority handling
+
+18. SUPERVISORY AUTHORITY
+
+**For EU/EEA Users:**
+If you are not satisfied with our response, you have the right to lodge a complaint with your local supervisory authority:
+- Find your authority: https://edpb.europa.eu/about-edpb/board/members_en
+
+**For Indian Users:**
+If your grievance is not resolved satisfactorily:
+1. National Consumer Helpline: 1800-11-4000 or https://consumerhelpline.gov.in
+2. Cyber Crime Helpline: 1930 or https://cybercrime.gov.in
+3. File complaint with local police Cyber Crime Cell
+4. Approach appropriate Consumer Forum under Consumer Protection Act, 2019
+
+19. CONTACT INFORMATION
+
+For privacy-related questions, data access requests, or to exercise your rights, contact us through the official Telegram bot channels.
+
+IMPORTANT NOTICE:
+We are committed to protecting your privacy and handling your data responsibly. This Privacy Policy is designed to comply with:
+   - General Data Protection Regulation (GDPR)
+   - Information Technology Act, 2000 (India)
+   - Information Technology (Reasonable Security Practices and Procedures and Sensitive Personal Data or Information) Rules, 2011 (India)
+
+Your use of the Service indicates acceptance of this Privacy Policy.
