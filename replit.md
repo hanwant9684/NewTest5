@@ -21,6 +21,7 @@ None specified yet. Add preferences as they are expressed.
     *   **Queue Management:** Implements a download queue with concurrency control.
     *   **Efficient Media Group Downloads:** Processes media group files sequentially (download, upload, delete) to prevent high RAM usage, uploading them as individual messages rather than grouped albums for memory efficiency.
     *   **Streaming Transfers:** Uses Telethon's built-in `iter_download()` for downloads and `upload_file()` for uploads, processing chunk-by-chunk (512KB chunks) without loading entire files into RAM.
+    *   **In-Flight Page Cache Eviction:** Evicts kernel page cache during BOTH download and upload phases using `os.posix_fadvise(POSIX_FADV_DONTNEED)` after each 512KB chunk. Prevents page cache from accumulating during large file transfers.
     *   **Maximum Upload Speed:** Configured with `part_size_kb=512` (Telegram's maximum) for fastest possible uploads with minimal protocol overhead.
     *   **Removed FastTelethon:** Replaced parallel connection system with streaming approach for massive RAM reduction (~5-10MB per transfer vs 40-160MB with FastTelethon).
 
@@ -36,6 +37,8 @@ None specified yet. Add preferences as they are expressed.
 
 4.  **System Stability & Optimization:**
     *   **RAM Optimization:** Implemented comprehensive memory optimizations including streaming downloads/uploads (~5-10MB per transfer), asynchronous background tasks (using `asyncio.create_task`), and optimized data structures for memory monitoring.
+    *   **In-Flight Page Cache Eviction (Downloads & Uploads):** Critical fix for Render/container deployments - uses `os.posix_fadvise(POSIX_FADV_DONTNEED)` to evict kernel page cache chunks immediately after writing during downloads and reading during uploads. Prevents page cache from accumulating during large file transfers (which was causing OOM crashes even when process RSS was only ~67MB).
+    *   **Container Memory Monitoring:** Enhanced memory monitoring to track cgroup memory usage (`/sys/fs/cgroup/memory.current`) in addition to process RSS. This shows the actual memory usage that Render/container platforms count against limits (includes both process memory + kernel page cache).
     *   **Cloud-Only Backup:** Simplifies backup strategy to use only GitHub for database persistence, with automatic backups every 10 minutes.
     *   **Robust Error Handling:** Includes graceful shutdown mechanisms and proper background task tracking to prevent resource leaks and errors like "Task was destroyed but it is pending!".
     *   **SQLite Database:** Chosen for its portability and low resource footprint.

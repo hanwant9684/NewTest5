@@ -4,3 +4,5 @@ psutil
 uvloop
 waitress
 orjson
+FastTelethonhelper
+FastTelethonhelper

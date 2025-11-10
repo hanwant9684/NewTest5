@@ -54,14 +54,16 @@ class MemoryMonitor:
         """Write critical memory events to dedicated log file.
         Only writes when:
         - force_write=True (when /memory-debug is accessed)
-        - Memory >= 400MB
-        - Memory > 480MB (about to crash)
+        - Container memory >= 400MB (includes page cache)
+        - Container memory > 480MB (about to crash)
         """
         try:
             # Only write if forced or memory is critical
             if not force_write:
                 mem = self.get_memory_info()
-                if mem['rss_mb'] < 400:
+                # Use cgroup memory if available (includes page cache), otherwise fall back to RSS
+                memory_to_check = mem.get('cgroup_mb', mem['rss_mb'])
+                if memory_to_check < 400:
                     return  # Skip writing for normal memory usage
             
             timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -71,6 +73,30 @@ class MemoryMonitor:
         except Exception as e:
             self.logger.error(f"Failed to write to memory log: {e}")
         
+    def _get_cgroup_memory_mb(self):
+        """Get container's total memory usage including page cache (cgroup v1 or v2).
+        This is the actual number Render uses for the 512MB limit."""
+        try:
+            # Try cgroup v2 first (newer systems)
+            cgroup_v2_path = '/sys/fs/cgroup/memory.current'
+            if os.path.exists(cgroup_v2_path):
+                with open(cgroup_v2_path, 'r') as f:
+                    bytes_used = int(f.read().strip())
+                    return round(bytes_used / 1024 / 1024, 2)
+            
+            # Fallback to cgroup v1
+            cgroup_v1_path = '/sys/fs/cgroup/memory/memory.usage_in_bytes'
+            if os.path.exists(cgroup_v1_path):
+                with open(cgroup_v1_path, 'r') as f:
+                    bytes_used = int(f.read().strip())
+                    return round(bytes_used / 1024 / 1024, 2)
+            
+            # Not in a container or cgroup not available
+            return None
+        except Exception as e:
+            self.logger.debug(f"Could not read cgroup memory: {e}")
+            return None
+    
     def get_memory_info(self):
         memory_info = self.process.memory_info()
         rss_mb = memory_info.rss / 1024 / 1024  # Convert to MB
@@ -82,13 +108,22 @@ class MemoryMonitor:
         system_available_mb = system_memory.available / 1024 / 1024
         system_percent = system_memory.percent
         
-        return {
+        # Get container memory usage (includes page cache)
+        cgroup_mb = self._get_cgroup_memory_mb()
+        
+        result = {
             'rss_mb': round(rss_mb, 2),
             'vms_mb': round(vms_mb, 2),
             'system_total_mb': round(system_total_mb, 2),
             'system_available_mb': round(system_available_mb, 2),
             'system_percent': system_percent
         }
+        
+        if cgroup_mb is not None:
+            result['cgroup_mb'] = cgroup_mb
+            result['page_cache_mb'] = round(cgroup_mb - rss_mb, 2)
+        
+        return result
     
     def get_detailed_state(self):
         try:
@@ -141,9 +176,15 @@ class MemoryMonitor:
         
         self.operation_history.append(snapshot)
         
+        # Build log message with cgroup info if available
+        cgroup_line = ""
+        if 'cgroup_mb' in mem:
+            cgroup_line = f"├─ Container Total: {mem['cgroup_mb']:.1f} MB (Process: {mem['rss_mb']:.1f} MB + Page Cache: {mem['page_cache_mb']:.1f} MB)\n"
+        
         log_msg = (
             f"📊 MEMORY SNAPSHOT | Operation: {operation or 'General'}\n"
             f"├─ RAM Usage: {mem['rss_mb']:.1f} MB (Virtual: {mem['vms_mb']:.1f} MB)\n"
+            f"{cgroup_line}"
             f"├─ System: {mem['system_percent']:.1f}% used ({mem['system_available_mb']:.1f} MB available)\n"
             f"├─ Sessions: {state['active_sessions']} | Queue: {state['queue_size']} | Active DLs: {state['active_downloads']}\n"
             f"├─ Cache: {state['cached_items']} items | Ad Sessions: {state['ad_sessions']}\n"
@@ -152,9 +193,16 @@ class MemoryMonitor:
         )
         
         # Check for critical memory (near crash on 512MB plan)
-        if mem['rss_mb'] > 480:  # 93% of 512MB - crash imminent!
+        # Use cgroup memory if available (includes page cache), otherwise fall back to RSS
+        memory_to_check = mem.get('cgroup_mb', mem['rss_mb'])
+        if memory_to_check > 480:  # 93% of 512MB - crash imminent!
+            cgroup_info = ""
+            if 'cgroup_mb' in mem:
+                cgroup_info = f"Container: {mem['cgroup_mb']:.1f} MB (RSS: {mem['rss_mb']:.1f} MB + Cache: {mem['page_cache_mb']:.1f} MB) | "
+            
             critical_msg = (
-                f"🚨 CRITICAL: CRASH IMMINENT! {mem['rss_mb']:.1f} MB / 512 MB\n"
+                f"🚨 CRITICAL: CRASH IMMINENT! {memory_to_check:.1f} MB / 512 MB\n"
+                f"{cgroup_info}"
                 f"Sessions: {state['active_sessions']} | Queue: {state['queue_size']} | "
                 f"Active DLs: {state['active_downloads']} | Cache: {state['cached_items']} | "
                 f"Ad Sessions: {state['ad_sessions']}\n"
@@ -189,13 +237,14 @@ class MemoryMonitor:
                 self._write_to_memory_log(f"  {idx}. [{op[0]}] {op[1]} - {op[2]:.1f} MB - {op[3]}")
             self._write_to_memory_log("-" * 80 + "\n")
             
-        elif mem['rss_mb'] > self.memory_threshold_mb:
-            self.logger.warning(f"⚠️ HIGH MEMORY USAGE: {mem['rss_mb']:.1f} MB / 512 MB")
+        elif memory_to_check > self.memory_threshold_mb:
+            self.logger.warning(f"⚠️ HIGH MEMORY USAGE: {memory_to_check:.1f} MB / 512 MB")
             self.logger.warning(log_msg)
             
             # Write to dedicated memory log file with reason
             high_mem_reason = f"High memory caused by: {operation or 'Unknown operation'} - {context or 'No context'}"
-            self._write_to_memory_log(f"⚠️ HIGH MEMORY: {mem['rss_mb']:.1f} MB / 512 MB")
+            cgroup_str = f" (Container: {mem['cgroup_mb']:.1f} MB)" if 'cgroup_mb' in mem else ""
+            self._write_to_memory_log(f"⚠️ HIGH MEMORY: {memory_to_check:.1f} MB / 512 MB{cgroup_str}")
             self._write_to_memory_log(high_mem_reason)
             self._write_to_memory_log(log_msg)
             self._write_to_memory_log("-" * 80 + "\n")
@@ -203,9 +252,10 @@ class MemoryMonitor:
         else:
             self.logger.info(log_msg)
         
-        # Periodic snapshots - only written if memory >= 400MB
-        if operation == "Periodic Check" and mem['rss_mb'] >= 400:
-            self._write_to_memory_log(f"📊 Periodic Snapshot (High Memory): {mem['rss_mb']:.1f} MB")
+        # Periodic snapshots - only written if container memory >= 400MB
+        if operation == "Periodic Check" and memory_to_check >= 400:
+            cgroup_str = f" (Container: {mem['cgroup_mb']:.1f} MB)" if 'cgroup_mb' in mem else ""
+            self._write_to_memory_log(f"📊 Periodic Snapshot (High Memory): {memory_to_check:.1f} MB{cgroup_str}")
             self._write_to_memory_log(f"   Sessions: {state['active_sessions']} | Queue: {state['queue_size']} | Active DLs: {state['active_downloads']} | Cache: {state['cached_items']} | Ad Sessions: {state['ad_sessions']}")
         
         self.last_memory_mb = mem['rss_mb']
@@ -308,7 +358,7 @@ class MemoryMonitor:
                 "thread_count": state['thread_count'],
                 "open_files": state['open_files']
             },
-            "status": self._get_memory_status(mem['rss_mb']),
+            "status": self._get_memory_status(mem),
             "recent_operations": [
                 {
                     "timestamp": op[0],
@@ -336,15 +386,18 @@ class MemoryMonitor:
         
         return response
     
-    def _get_memory_status(self, rss_mb):
-        """Get human-readable memory status"""
-        if rss_mb > 480:
+    def _get_memory_status(self, mem_info):
+        """Get human-readable memory status based on container usage (includes page cache)"""
+        # Use cgroup memory if available, otherwise fall back to RSS
+        memory_mb = mem_info.get('cgroup_mb', mem_info.get('rss_mb', 0))
+        
+        if memory_mb > 480:
             return "🚨 CRITICAL - Crash Imminent!"
-        elif rss_mb >= 400:
+        elif memory_mb >= 400:
             return "⚠️ HIGH - Needs Attention"
-        elif rss_mb >= 300:
+        elif memory_mb >= 300:
             return "⚡ ELEVATED - Monitor Closely"
-        elif rss_mb >= 200:
+        elif memory_mb >= 200:
             return "✅ NORMAL - Healthy"
         else:
             return "✅ LOW - Excellent"
@@ -357,21 +410,24 @@ class MemoryMonitor:
                 
                 # Force garbage collection if memory is high
                 mem = self.get_memory_info()
-                if mem['rss_mb'] > self.memory_threshold_mb:
-                    self.logger.warning(f"⚠️ Memory above threshold, forcing garbage collection...")
-                    self._write_to_memory_log(f"🗑️ Auto GC triggered at {mem['rss_mb']:.1f} MB")
+                memory_to_check = mem.get('cgroup_mb', mem['rss_mb'])
+                if memory_to_check > self.memory_threshold_mb:
+                    cgroup_str = f" (Container: {mem['cgroup_mb']:.1f} MB)" if 'cgroup_mb' in mem else ""
+                    self.logger.warning(f"⚠️ Memory above threshold{cgroup_str}, forcing garbage collection...")
+                    self._write_to_memory_log(f"🗑️ Auto GC triggered at {memory_to_check:.1f} MB{cgroup_str}")
                     
                     import gc
                     collected = gc.collect()
                     mem_after = self.get_memory_info()
-                    freed = mem['rss_mb'] - mem_after['rss_mb']
+                    memory_after = mem_after.get('cgroup_mb', mem_after['rss_mb'])
+                    freed = memory_to_check - memory_after
                     
                     self.logger.info(
                         f"🗑️ GC collected {collected} objects. "
-                        f"Memory: {mem['rss_mb']:.1f} MB → {mem_after['rss_mb']:.1f} MB "
+                        f"Memory: {memory_to_check:.1f} MB → {memory_after:.1f} MB "
                         f"(freed {freed:.1f} MB)"
                     )
-                    self._write_to_memory_log(f"   Collected {collected} objects, freed {freed:.1f} MB → now {mem_after['rss_mb']:.1f} MB")
+                    self._write_to_memory_log(f"   Collected {collected} objects, freed {freed:.1f} MB → now {memory_after:.1f} MB")
                     self._write_to_memory_log("-" * 80 + "\n")
             except Exception as e:
                 self.logger.error(f"Error in periodic monitor: {e}")
